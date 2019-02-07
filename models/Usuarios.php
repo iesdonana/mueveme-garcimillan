@@ -62,6 +62,6 @@ class Usuarios extends \yii\db\ActiveRecord
      */
     public function getNoticias()
     {
-        return $this->hasMany(Noticias::className(), ['autor' => 'id']);
+        return $this->hasMany(Noticias::className(), ['usuario_id' => 'id']);
     }
 }

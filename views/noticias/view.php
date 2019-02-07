@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'titulo',
             'votos',
             'extracto:ntext',
-            'autor',
+            'usuario_id',
             'created_at',
         ],
     ]) ?>

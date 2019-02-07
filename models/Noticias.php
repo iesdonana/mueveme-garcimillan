@@ -11,10 +11,10 @@ use Yii;
  * @property string $titulo
  * @property string $votos
  * @property string $extracto
- * @property int $autor
+ * @property int $usuario_id
  * @property string $created_at
  *
- * @property Usuarios $autor0
+ * @property Usuarios $usuario
  */
 class Noticias extends \yii\db\ActiveRecord
 {
@@ -35,11 +35,11 @@ class Noticias extends \yii\db\ActiveRecord
             [['titulo'], 'required'],
             [['votos'], 'number'],
             [['extracto'], 'string'],
-            [['autor'], 'default', 'value' => null],
-            [['autor'], 'integer'],
+            [['usuario_id'], 'default', 'value' => null],
+            [['usuario_id'], 'integer'],
             [['created_at'], 'safe'],
             [['titulo'], 'string', 'max' => 255],
-            [['autor'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['autor' => 'id']],
+            [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['usuario_id' => 'id']],
         ];
     }
 
@@ -53,7 +53,7 @@ class Noticias extends \yii\db\ActiveRecord
             'titulo' => 'Titulo',
             'votos' => 'Votos',
             'extracto' => 'Extracto',
-            'autor' => 'Autor',
+            'usuario_id' => 'Usuario ID',
             'created_at' => 'Created At',
         ];
     }
@@ -61,8 +61,8 @@ class Noticias extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAutor0()
+    public function getUsuario()
     {
-        return $this->hasOne(Usuarios::className(), ['id' => 'autor']);
+        return $this->hasOne(Usuarios::className(), ['id' => 'usuario_id']);
     }
 }

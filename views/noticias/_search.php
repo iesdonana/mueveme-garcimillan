@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'extracto') ?>
 
-    <?= $form->field($model, 'autor') ?>
+    <?= $form->field($model, 'usuario_id') ?>
 
     <?php // echo $form->field($model, 'created_at') ?>
 

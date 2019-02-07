@@ -17,7 +17,7 @@ class NoticiasSearch extends Noticias
     public function rules()
     {
         return [
-            [['id', 'autor'], 'integer'],
+            [['id', 'usuario_id'], 'integer'],
             [['titulo', 'extracto', 'created_at'], 'safe'],
             [['votos'], 'number'],
         ];
@@ -61,7 +61,7 @@ class NoticiasSearch extends Noticias
         $query->andFilterWhere([
             'id' => $this->id,
             'votos' => $this->votos,
-            'autor' => $this->autor,
+            'usuario_id' => $this->usuario_id,
             'created_at' => $this->created_at,
         ]);
 

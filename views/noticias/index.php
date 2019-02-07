@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\NoticiasSearch */
@@ -13,26 +13,18 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="noticias-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <!-- <?php echo $this->render('_search', ['model' => $searchModel]); ?> -->
 
     <p>
         <?= Html::a('Create Noticias', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= GridView::widget([
+    <?= ListView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'titulo',
-            'votos',
-            'extracto:ntext',
-            'autor',
-            //'created_at',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+        'itemOptions' => ['class' => 'item'],
+        'itemView' => function ($model, $key, $index, $widget) {
+            return Html::encode($model->titulo);
+            //TODO
+        },
+    ]) ?>
 </div>
