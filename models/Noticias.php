@@ -2,8 +2,6 @@
 
 namespace app\models;
 
-use Yii;
-
 /**
  * This is the model class for table "noticias".
  *
@@ -33,9 +31,10 @@ class Noticias extends \yii\db\ActiveRecord
     {
         return [
             [['titulo'], 'required'],
-            [['votos'], 'number'],
+            [['votos'], 'number', 'min' => 0],
             [['extracto'], 'string'],
             [['usuario_id'], 'default', 'value' => null],
+            // [['votos'], 'default', 'value' => 0],
             [['usuario_id'], 'integer'],
             [['created_at'], 'safe'],
             [['titulo'], 'string', 'max' => 255],

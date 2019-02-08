@@ -23,8 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'itemOptions' => ['class' => 'item'],
         'itemView' => function ($model, $key, $index, $widget) {
-            return Html::encode($model->titulo);
-            //TODO
+            return $this->render('_vistaPelicula', ['model' => $model]);
         },
     ]) ?>
 </div>
