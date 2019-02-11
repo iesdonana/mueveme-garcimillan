@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Noticias;
+use app\models\Categorias;
 
 /**
- * NoticiasSearch represents the model behind the search form of `app\models\Noticias`.
+ * CategoriasSearch represents the model behind the search form of `app\models\Categorias`.
  */
-class NoticiasSearch extends Noticias
+class CategoriasSearch extends Categorias
 {
     /**
      * {@inheritdoc}
@@ -17,9 +17,8 @@ class NoticiasSearch extends Noticias
     public function rules()
     {
         return [
-            [['id', 'categoria_id', 'usuario_id'], 'integer'],
-            [['titulo', 'extracto', 'created_at'], 'safe'],
-            [['votos'], 'number'],
+            [['id'], 'integer'],
+            [['categoria'], 'safe'],
         ];
     }
 
@@ -41,7 +40,7 @@ class NoticiasSearch extends Noticias
      */
     public function search($params)
     {
-        $query = Noticias::find();
+        $query = Categorias::find();
 
         // add conditions that should always apply here
 
@@ -60,14 +59,9 @@ class NoticiasSearch extends Noticias
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'votos' => $this->votos,
-            'categoria_id' => $this->categoria_id,
-            'usuario_id' => $this->usuario_id,
-            'created_at' => $this->created_at,
         ]);
 
-        $query->andFilterWhere(['ilike', 'titulo', $this->titulo])
-            ->andFilterWhere(['ilike', 'extracto', $this->extracto]);
+        $query->andFilterWhere(['ilike', 'categoria', $this->categoria]);
 
         return $dataProvider;
     }

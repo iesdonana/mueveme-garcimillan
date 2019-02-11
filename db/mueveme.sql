@@ -57,9 +57,12 @@ CREATE TABLE noticias
 INSERT INTO usuarios (nombre, password)
 VALUES ('admin', crypt('admin', gen_salt('bf', 10)));
 
-INSERT INTO noticias (titulo, extracto, usuario_id)
+INSERT INTO categorias (categoria)
+VALUES ('Peligro');
+
+INSERT INTO noticias (titulo, extracto, usuario_id, categoria_id)
 VALUES ('Zugasti, el terror del bandolerismo', 'Si para la historia han
- quedado los nombres y hechos de un gran número de bandoleros, este...', 1);
+ quedado los nombres y hechos de un gran número de bandoleros, este...', 1, 1);
 
 INSERT INTO comentarios (opinion, usuario_id, noticia_id)
 VALUES ('Que mala noticia', 1, 1);
