@@ -21,9 +21,17 @@ CREATE TABLE comentarios
                               ON DELETE NO ACTION
                               ON UPDATE CASCADE
   , noticia_id  BIGINT        REFERENCES noticias (id)
-                              ON DELETE CASCADE
+                              ON DELETE NO ACTION
                               ON UPDATE CASCADE
   , created_at  DATE          NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+DROP TABLE IF EXISTS categorias CASCADE;
+
+CREATE TABLE categorias
+(
+    id          BIGSERIAL    PRIMARY KEY
+  , categoria   VARCHAR(255) NOT NULL UNIQUE
 );
 
 DROP TABLE IF EXISTS noticias CASCADE;
@@ -32,8 +40,12 @@ CREATE TABLE noticias
 (
     id               BIGSERIAL         PRIMARY KEY
   , titulo           VARCHAR(255)      NOT NULL
-  , votos            NUMERIC(9)        DEFAULT 0
+  , votos            NUMERIC(9)        NOT NULL DEFAULT 0
   , extracto         TEXT
+  , categoria_id     BIGINT            NOT NULL
+                                       REFERENCES categorias (id)
+                                       ON DELETE NO ACTION
+                                       ON UPDATE CASCADE
   , usuario_id       BIGINT            REFERENCES usuarios (id)
                                        ON DELETE NO ACTION
                                        ON UPDATE CASCADE
