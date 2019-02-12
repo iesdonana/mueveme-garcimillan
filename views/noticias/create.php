@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Noticias */
@@ -24,7 +25,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?= $form->field($model, 'extracto')->textarea(['rows' => 6]) ?>
 
-        <?= $form->field($model, 'categoria_id')->dropDownList($listaCategorias) ?>
+        <?= $form->field($model, 'categoria_id')->widget(Select2::classname(), [
+                'data' => $listaCategorias,
+                'options' => ['placeholder' => 'Selecciona una categoria...'],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
+            ]);
+        ?>
 
         <?= $form->field($model, 'usuario_id')->textInput() ?>
 
