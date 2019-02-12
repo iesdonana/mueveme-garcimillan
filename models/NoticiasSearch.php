@@ -18,7 +18,7 @@ class NoticiasSearch extends Noticias
     {
         return [
             [['id', 'categoria_id', 'usuario_id'], 'integer'],
-            [['titulo', 'extracto', 'created_at'], 'safe'],
+            [['titulo', 'extracto', 'url', 'created_at'], 'safe'],
             [['votos'], 'number'],
         ];
     }
@@ -67,7 +67,8 @@ class NoticiasSearch extends Noticias
         ]);
 
         $query->andFilterWhere(['ilike', 'titulo', $this->titulo])
-            ->andFilterWhere(['ilike', 'extracto', $this->extracto]);
+            ->andFilterWhere(['ilike', 'extracto', $this->extracto])
+            ->andFilterWhere(['ilike', 'url', $this->url]);
 
         return $dataProvider;
     }

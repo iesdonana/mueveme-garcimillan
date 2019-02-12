@@ -18,6 +18,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'extracto')->textarea(['rows' => 6]) ?>
 
+    <?= $form->field($model, 'url')->textarea(['rows' => 6]) ?>
+
     <?= $form->field($model, 'categoria_id')->textInput() ?>
 
     <?= $form->field($model, 'usuario_id')->textInput() ?>

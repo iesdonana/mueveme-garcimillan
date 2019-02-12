@@ -23,7 +23,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'extracto') ?>
 
-    <?= $form->field($model, 'categoria_id') ?>
+    <?= $form->field($model, 'url') ?>
+
+    <?php // echo $form->field($model, 'categoria_id') ?>
 
     <?php // echo $form->field($model, 'usuario_id') ?>
 

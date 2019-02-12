@@ -42,6 +42,7 @@ CREATE TABLE noticias
   , titulo           VARCHAR(255)      NOT NULL
   , votos            NUMERIC(9)        NOT NULL DEFAULT 0
   , extracto         TEXT
+  , url              TEXT              NOT NULL
   , categoria_id     BIGINT            NOT NULL
                                        REFERENCES categorias (id)
                                        ON DELETE NO ACTION
@@ -60,9 +61,9 @@ VALUES ('admin', crypt('admin', gen_salt('bf', 10)));
 INSERT INTO categorias (categoria)
 VALUES ('Peligro');
 
-INSERT INTO noticias (titulo, extracto, usuario_id, categoria_id)
+INSERT INTO noticias (titulo, extracto, url, usuario_id, categoria_id)
 VALUES ('Zugasti, el terror del bandolerismo', 'Si para la historia han
- quedado los nombres y hechos de un gran número de bandoleros, este...', 1, 1);
+ quedado los nombres y hechos de un gran número de bandoleros, este...', 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',  1, 1);
 
 INSERT INTO comentarios (opinion, usuario_id, noticia_id)
 VALUES ('Que mala noticia', 1, 1);
