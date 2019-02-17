@@ -11,6 +11,7 @@ use Yii;
  * @property string $titulo
  * @property string $votos
  * @property string $extracto
+ * @property string $url
  * @property int $categoria_id
  * @property int $usuario_id
  * @property string $created_at
@@ -34,9 +35,9 @@ class Noticias extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['titulo', 'categoria_id'], 'required'],
+            [['titulo', 'url', 'categoria_id'], 'required'],
             [['votos'], 'number'],
-            [['extracto'], 'string'],
+            [['extracto', 'url'], 'string'],
             [['categoria_id', 'usuario_id'], 'default', 'value' => null],
             [['categoria_id', 'usuario_id'], 'integer'],
             [['created_at'], 'safe'],
@@ -56,6 +57,7 @@ class Noticias extends \yii\db\ActiveRecord
             'titulo' => 'Titulo',
             'votos' => 'Votos',
             'extracto' => 'Extracto',
+            'url' => 'Url',
             'categoria_id' => 'Categoria ID',
             'usuario_id' => 'Usuario ID',
             'created_at' => 'Created At',

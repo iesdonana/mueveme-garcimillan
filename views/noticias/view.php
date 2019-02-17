@@ -33,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'titulo',
             'votos',
             'extracto:ntext',
+            'url:ntext',
             'categoria_id',
             'usuario_id',
             'created_at',
