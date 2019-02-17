@@ -8,6 +8,8 @@ CREATE TABLE usuarios
 (
     id            BIGSERIAL          PRIMARY KEY
   , nombre        VARCHAR(32)        NOT NULL UNIQUE
+                                     CONSTRAINT ck_nombre_sin_espacios
+                                     CHECK (nombre NOT LIKE '% %')
   , password      VARCHAR(60)        NOT NULL
 );
 
