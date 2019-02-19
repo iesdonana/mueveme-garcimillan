@@ -15,26 +15,45 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <table border="0">
         <tr>
-            <th><?= Html::encode($model->votos) ?></th>
-            <th><?= Html::encode($model->titulo) ?></th>
+            <td>
+                <table border="0">
+                    <tr>
+                        <th>
+                            <p style="text-align: center"><?= Html::encode($model->votos) ?></p>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>votos</th>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <table border="0">
+                    <tr>
+                        <td>
+                            <h2><?= Html::a(Html::encode($model->titulo), Html::encode($model->url)); ?></h2>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p><?= Html::encode($model->extracto) ?></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Publicado por: <?= Html::encode($model->usuario->nombre) ?> el <?= Html::encode($model->created_at) ?></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>
+                                Categoría: <?= Html::encode($model->categoria->categoria) ?>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
         </tr>
-        <tr>
-            <td><?= Html::encode($model->titulo) ?></td>
-        </tr>
+
     </table>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'titulo',
-            'votos',
-            'extracto:ntext',
-            'url:ntext',
-            'categoria_id',
-            'usuario_id',
-            'created_at',
-        ],
-    ]) ?>
-
 </div>
