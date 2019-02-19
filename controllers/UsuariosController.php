@@ -131,4 +131,19 @@ class UsuariosController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    public function actionRegistrar()
+    {
+        $model = new Usuarios(['scenario' => Usuarios::SCENARIO_CREATE]);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $identity = $model;
+            Yii::$app->user->login($identity);
+            return $this->goBack();
+        }
+
+        return $this->render('registrar', [
+             'model' => $model,
+         ]);
+    }
 }
