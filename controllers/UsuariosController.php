@@ -137,7 +137,9 @@ class UsuariosController extends Controller
         $model = new Usuarios(['scenario' => Usuarios::SCENARIO_CREATE]);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $identity = $model;
+            Yii::$app->user->login($identity);
+            return $this->goBack();
         }
 
         return $this->render('registrar', [
