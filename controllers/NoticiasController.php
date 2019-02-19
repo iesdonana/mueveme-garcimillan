@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Categorias;
 use app\models\Noticias;
 use app\models\NoticiasSearch;
 use Yii;
@@ -65,6 +66,7 @@ class NoticiasController extends Controller
     public function actionCreate()
     {
         $model = new Noticias();
+        $listaCategorias = $this->listaCategorias();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -72,6 +74,7 @@ class NoticiasController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'listaCategorias' => $listaCategorias,
         ]);
     }
 
@@ -123,5 +126,13 @@ class NoticiasController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    private function listaCategorias()
+    {
+        return Categorias::find()
+            ->select('categoria')
+            ->indexBy('id')
+            ->column();
     }
 }
