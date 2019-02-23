@@ -43,8 +43,11 @@ AppAsset::register($this);
             ['label' => 'Comentarios', 'url' => ['/comentarios/index']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
             Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
-                ['label' => 'Registrarse', 'url' => ['/usuarios/registrar']],
+                '<li>'
+                . Html::a('Login', ['site/login'])
+                . '</li><li>'
+                . Html::a('Registrar', ['usuarios/registrar'])
+                . '</li>'
             ) : (
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
