@@ -36,7 +36,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?= $form->field($model, 'url')->textInput() ?>
 
-        <?= $form->field($model, 'usuario_id')->textInput() ?>
+        <?= $form->field($model, 'usuario_id')->textInput([
+            'disabled' => true,
+            'value' => Yii::$app->user->identity->nombre,
+            ])?>
 
         <div class="form-group">
             <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

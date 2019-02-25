@@ -72,10 +72,15 @@ class NoticiasController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('create', [
-            'model' => $model,
-            'listaCategorias' => $listaCategorias,
-        ]);
+        if (!Yii::$app->user->isGuest) {
+            return $this->render('create', [
+                'model' => $model,
+                'listaCategorias' => $listaCategorias,
+            ]);
+        }
+
+        Yii::$app->session->setFlash('error', 'Debes estar logeado para crear una noticia');
+        return $this->goBack();
     }
 
     /**

@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </tr>
                     <tr>
                         <td>
-                            <p>Publicado por: <?= Html::encode($model->usuario->nombre) ?> el <?= Html::encode($model->created_at) ?></p>
+                             <p>Publicado por: <?= Html::encode($model->usuario) ?> el <?= Html::encode($model->created_at) ?></p> 
                         </td>
                     </tr>
                     <tr>
