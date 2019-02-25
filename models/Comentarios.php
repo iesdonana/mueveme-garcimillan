@@ -2,8 +2,6 @@
 
 namespace app\models;
 
-use Yii;
-
 /**
  * This is the model class for table "comentarios".
  *
@@ -34,7 +32,6 @@ class Comentarios extends \yii\db\ActiveRecord
             [['opinion'], 'string'],
             [['usuario_id', 'noticia_id'], 'default', 'value' => null],
             [['usuario_id', 'noticia_id'], 'integer'],
-            [['created_at'], 'safe'],
             [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['usuario_id' => 'id']],
         ];
     }
