@@ -55,7 +55,7 @@ CREATE TABLE noticias
   , usuario_id       BIGINT            REFERENCES usuarios (id)
                                        ON DELETE NO ACTION
                                        ON UPDATE CASCADE
-  , created_at       DATE              DEFAULT CURRENT_TIMESTAMP
+  , created_at       DATE              NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 -- INSERTS

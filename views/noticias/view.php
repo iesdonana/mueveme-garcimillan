@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </tr>
                     <tr>
                         <td>
-                            <p>Publicado por: <?= Html::encode($model->usuario->nombre) ?> el <?= Html::encode($model->created_at) ?></p>
+                             <p>Publicado por: <?= Html::encode($model->usuario->nombre) ?> el <?= Html::encode($model->created_at) ?></p>
                         </td>
                     </tr>
                     <tr>
@@ -56,4 +56,18 @@ $this->params['breadcrumbs'][] = $this->title;
         </tr>
 
     </table>
+
+    <?php if(Yii::$app->user->id === 1 || Yii::$app->user->id === $model->id ) { ?>
+
+    <p>
+        <?= Html::a('Borrar noticia', ['delete', 'id' => $model->id], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => '¿Estas seguro de que quieres borrar la noticia?',
+                'method' => 'post',
+            ],
+        ]) ?>
+        <?= Html::a('Actualizar Noticia', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+    </p>
+    <?php } ?>
 </div>
