@@ -13,15 +13,15 @@ use yii\helpers\Html;
         </th>
     </tr>
     <tr>
-        <td>
-            <p style="text-align: center"><?= Html::encode($model->votos) ?></p>
-        </td>
+        <td><?= Html::a('Votar', ['noticias/votar', 'id' => $model->id], ['class' => 'btn btn-primary']) ?></td>
         <td>
             <p><?= Html::encode($model->extracto) ?></p>
         </td>
     </tr>
     <tr>
-        <td></td>
+        <td>
+            <p style="text-align: center"><?= Html::encode($model->votos) ?></p>
+        </td>
         <td>
             <p><?= Html::encode($model->categoria->categoria) ?></p>
         </td>

@@ -140,4 +140,13 @@ class NoticiasController extends Controller
             ->indexBy('id')
             ->column();
     }
+
+    public function actionVotar($id)
+    {
+        $noticia = $this->findModel($id);
+        $noticia->votos++;
+        $noticia->save();
+
+        return $this->goBack();
+    }
 }
