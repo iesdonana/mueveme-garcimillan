@@ -36,11 +36,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?= $form->field($model, 'url')->textInput() ?>
 
-        <?=
-        // $model->usuario_id = Yii::$app->user->id;
-
-        $form->field($model, 'usuario_id')->textInput([
-            'disabled' => true,
+        <?= $form->field($model, 'usuario_id')->textInput([
+            'readonly' => true,
             'value' => Yii::$app->user->identity->id,
         ]);
         ?>

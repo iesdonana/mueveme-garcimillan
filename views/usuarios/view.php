@@ -15,10 +15,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
+    <?php if(Yii::$app->user->id === 1 || Yii::$app->user->id === $model->id ) { ?>
     <p>
         <?= Html::a('Actualizar perfil', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
 
     </p>
+    <?php } ?>
 
     <?= DetailView::widget([
         'model' => $model,
@@ -31,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
+    <?php if(Yii::$app->user->id === 1 || Yii::$app->user->id === $model->id ) { ?>
     <p>
         <?= Html::a('Borrar Perfil', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
@@ -40,5 +43,5 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-
+    <?php } ?>
 </div>
