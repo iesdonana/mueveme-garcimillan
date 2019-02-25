@@ -69,7 +69,7 @@ class Noticias extends \yii\db\ActiveRecord
      */
     public function getCategoria()
     {
-        return $this->hasOne(Categorias::className(), ['id' => 'categoria_id']);
+        return $this->hasOne(Categorias::className(), ['id' => 'categoria_id'])->inverseOf('noticias');
     }
 
     /**
@@ -77,6 +77,6 @@ class Noticias extends \yii\db\ActiveRecord
      */
     public function getUsuario()
     {
-        return $this->hasOne(Usuarios::className(), ['id' => 'usuario_id']);
+        return $this->hasOne(Usuarios::className(), ['id' => 'usuario_id'])->inverseOf('noticias');
     }
 }

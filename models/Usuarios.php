@@ -36,8 +36,11 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['nombre', 'password'], 'required'],
-            [['nombre'], 'string', 'max' => 32],
+            [['nombre', 'password', 'email'], 'required'],
+           [['created_at'], 'safe'],
+           [['nombre', 'token'], 'string', 'max' => 32],
+           [['password'], 'string', 'max' => 60],
+           [['email'], 'string', 'max' => 255],
             [['nombre'], 'unique'],
             [['password'], 'string', 'max' => 60],
             [['password', 'password_repeat'], 'required', 'on' => [self::SCENARIO_CREATE]],
@@ -141,7 +144,7 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function getComentarios()
     {
-        return $this->hasMany(Comentarios::className(), ['usuario_id' => 'id']);
+        return $this->hasMany(Comentarios::className(), ['usuario_id' => 'id'])->inverseOf('usuario');
     }
 
     /**
@@ -149,6 +152,6 @@ class Usuarios extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function getNoticias()
     {
-        return $this->hasMany(Noticias::className(), ['usuario_id' => 'id']);
+        return $this->hasMany(Noticias::className(), ['usuario_id' => 'id'])->inverseOf('usuario');
     }
 }

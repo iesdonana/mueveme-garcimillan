@@ -41,7 +41,6 @@ AppAsset::register($this);
             ['label' => 'Noticias', 'url' => ['/noticias/index']],
             ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
             ['label' => 'Comentarios', 'url' => ['/comentarios/index']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
             Yii::$app->user->isGuest ? (
                 '<li>'
                 . Html::a('Login', ['site/login'])
@@ -49,14 +48,19 @@ AppAsset::register($this);
                 . Html::a('Registrar', ['usuarios/registrar'])
                 . '</li>'
             ) : (
-                '<li>'
+                '<span class="dropdown">'
+                . '<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">'. Yii::$app->user->identity->nombre
+                . '<span class="caret"></span></button>'
+                . '<ul class="dropdown-menu">'
+                . '<li>' . Html::a('Perfil', ['usuarios/view', 'id' => Yii::$app->user->id]) . '</li>'
                 . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->nombre . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
+                . '<li>' . Html::submitButton(
+                            'Logout (' . Yii::$app->user->identity->nombre . ')',
+                            ['class' => 'btn btn-link logout'])
                 . '</li>'
+                . Html::endForm()
+                . '</ul>'
+                . '</span>'
             ),
         ],
     ]);

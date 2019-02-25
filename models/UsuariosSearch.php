@@ -18,7 +18,7 @@ class UsuariosSearch extends Usuarios
     {
         return [
             [['id'], 'integer'],
-            [['nombre', 'password'], 'safe'],
+            [['nombre', 'password', 'created_at', 'token', 'email'], 'safe'],
         ];
     }
 
@@ -59,10 +59,13 @@ class UsuariosSearch extends Usuarios
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'created_at' => $this->created_at,
         ]);
 
         $query->andFilterWhere(['ilike', 'nombre', $this->nombre])
-            ->andFilterWhere(['ilike', 'password', $this->password]);
+            ->andFilterWhere(['ilike', 'password', $this->password])
+            ->andFilterWhere(['ilike', 'token', $this->token])
+            ->andFilterWhere(['ilike', 'email', $this->email]);
 
         return $dataProvider;
     }
