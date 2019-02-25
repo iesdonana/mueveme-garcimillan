@@ -34,6 +34,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ]);
         ?>
 
+        <?= $form->field($model, 'url')->textInput() ?>
+
         <?= $form->field($model, 'usuario_id')->textInput() ?>
 
         <div class="form-group">
