@@ -41,19 +41,27 @@ AppAsset::register($this);
             ['label' => 'Noticias', 'url' => ['/noticias/index']],
             ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
             ['label' => 'Comentarios', 'url' => ['/comentarios/index']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
             Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
-                ['label' => 'Registrarse', 'url' => ['/usuarios/registrar']],
-            ) : (
                 '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->nombre . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
+                . Html::a('Login', ['site/login'])
+                . '</li><li>'
+                . Html::a('Registrar', ['usuarios/registrar'])
                 . '</li>'
+            ) : (
+                '<span class="dropdown">'
+                . '<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">'. Yii::$app->user->identity->nombre
+                . '<span class="caret"></span></button>'
+                . '<ul class="dropdown-menu">'
+                . '<li>' . Html::a('Ver perfil', ['usuarios/view', 'id' => Yii::$app->user->id]) . '</li>'
+                . '<li>' . Html::a('Editar perfil', ['usuarios/update', 'id' => Yii::$app->user->id]) . '</li>'
+                . Html::beginForm(['/site/logout'], 'post')
+                . '<li>' . Html::submitButton(
+                            'Logout (' . Yii::$app->user->identity->nombre . ')',
+                            ['class' => 'btn btn-link logout'])
+                . '</li>'
+                . Html::endForm()
+                . '</ul>'
+                . '</span>'
             ),
         ],
     ]);

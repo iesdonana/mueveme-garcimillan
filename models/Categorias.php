@@ -50,6 +50,6 @@ class Categorias extends \yii\db\ActiveRecord
      */
     public function getNoticias()
     {
-        return $this->hasMany(Noticias::className(), ['categoria_id' => 'id']);
+        return $this->hasMany(Noticias::className(), ['categoria_id' => 'id'])->inverseOf('categoria');
     }
 }

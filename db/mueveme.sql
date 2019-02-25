@@ -11,6 +11,9 @@ CREATE TABLE usuarios
                                      CONSTRAINT ck_nombre_sin_espacios
                                      CHECK (nombre NOT LIKE '% %')
   , password      VARCHAR(60)        NOT NULL
+  , created_at    DATE               NOT NULL DEFAULT CURRENT_TIMESTAMP
+  , token         VARCHAR(32)
+  , email         VARCHAR(255)       NOT NULL
 );
 
 DROP TABLE IF EXISTS comentarios CASCADE;
@@ -57,8 +60,8 @@ CREATE TABLE noticias
 
 -- INSERTS
 
-INSERT INTO usuarios (nombre, password)
-VALUES ('admin', crypt('admin', gen_salt('bf', 10)));
+INSERT INTO usuarios (nombre, password, email)
+VALUES ('admin', crypt('admin', gen_salt('bf', 10)), 'admin@correo.com');
 
 INSERT INTO categorias (categoria)
 VALUES ('Peligro');
