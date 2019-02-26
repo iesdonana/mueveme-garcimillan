@@ -147,6 +147,6 @@ class NoticiasController extends Controller
         $noticia->votos++;
         $noticia->save();
 
-        return $this->goBack();
+        return $noticia->votos;
     }
 }
