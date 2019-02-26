@@ -14,8 +14,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'titulo')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'votos')->textInput() ?>
-
     <?= $form->field($model, 'extracto')->textarea(['rows' => 6]) ?>
 
     <?= $form->field($model, 'url')->textarea(['rows' => 6]) ?>
