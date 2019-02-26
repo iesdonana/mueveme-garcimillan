@@ -40,7 +40,6 @@ AppAsset::register($this);
         'items' => [
             ['label' => 'Noticias', 'url' => ['/noticias/index']],
             ['label' => 'Usuarios', 'url' => ['/usuarios/index']],
-            ['label' => 'Comentarios', 'url' => ['/comentarios/index']],
             Yii::$app->user->isGuest ? (
                 '<li>'
                 . Html::a('Login', ['site/login'])
