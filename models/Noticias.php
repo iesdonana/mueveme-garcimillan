@@ -34,7 +34,6 @@ class Noticias extends \yii\db\ActiveRecord
     {
         return [
             [['titulo', 'url', 'categoria_id'], 'required'],
-            [['votos'], 'number'],
             [['extracto', 'url'], 'string'],
             [['url'], 'url'],
             [['categoria_id', 'usuario_id'], 'default', 'value' => null],

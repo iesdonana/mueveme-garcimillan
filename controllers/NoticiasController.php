@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Categorias;
 use app\models\Noticias;
 use app\models\NoticiasSearch;
+use app\models\Votaciones;
 use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -141,12 +142,19 @@ class NoticiasController extends Controller
             ->column();
     }
 
-    public function actionVotar($id)
+    public function actionVotar($noticia_id, $usuario_id)
     {
-        $noticia = $this->findModel($id);
-        $noticia->votos++;
-        $noticia->save();
+        $noticia = $this->findModel($noticia_id);
+        $model = new Votaciones(['usuario_id' => $usuario_id, 'noticia_id' => $noticia_id]);
+        if (Yii::$app->request->isAjax) {
+            if ($model->save()) {
+                $noticia->votos++;
+                if ($noticia->save()) {
+                    return true;
+                }
+            }
+        }
 
-        return $noticia->votos;
+        return false;
     }
 }

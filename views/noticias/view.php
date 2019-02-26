@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     </table>
 
-    <?php if(Yii::$app->user->id === 1 || Yii::$app->user->id === $model->id ) { ?>
+    <?php if(Yii::$app->user->id === 1 || Yii::$app->user->id === $model->usuario->id ) { ?>
 
     <p>
         <?= Html::a('Borrar noticia', ['delete', 'id' => $model->id], [

@@ -58,6 +58,19 @@ CREATE TABLE noticias
   , created_at       DATE              NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+DROP TABLE IF EXISTS votaciones CASCADE;
+
+CREATE TABLE votaciones
+(
+    usuario_id    BIGINT    REFERENCES usuarios(id)
+                            ON DELETE CASCADE
+                            ON UPDATE CASCADE
+  , noticia_id    BIGINT    REFERENCES noticias(id)
+                            ON DELETE CASCADE
+                            ON UPDATE CASCADE
+  , PRIMARY KEY(usuario_id, noticia_id)
+);
+
 -- INSERTS
 
 INSERT INTO usuarios (nombre, password, email)
