@@ -11,11 +11,10 @@ $this->title = 'Noticias';
 $this->params['breadcrumbs'][] = $this->title;
 
 $url = Url::to(['noticias/filtrar']);
-$usuario_id = Yii::$app->user->identity->id;
 $js = <<<EOF
 $('#botonCategorias').click(function(e){
     e.preventDefault();
-    let categoriaId = $('#categorias > option:selected').attr('value');
+    let categoriaId = parseInt($('#categorias > option:selected').attr('value'));
     console.log(categoriaId);
     $.ajax({
         method: 'GET',
@@ -23,9 +22,7 @@ $('#botonCategorias').click(function(e){
         data: {categoria_id: categoriaId},
         success: function(data){
             if (data) {
-                console.log(data);
                 $("#listaNoticias").html(data);
-                alert("bien");
             }else {
                 alert('no functiona');
             }
@@ -71,7 +68,7 @@ $this->registerJs($js);
     <button id="botonCategorias">Buscar</button>
 
     <div id="listaNoticias">
-        <?= Yii::$app->controller->renderPartial('_listaNoticias', ['dataProvider' => $dataProvider, 'query' => ['Hola']]) ?>
+        <?= Yii::$app->controller->renderPartial('_listaNoticias', ['dataProvider' => $dataProvider]) ?>
     </div>
 
 </div>
