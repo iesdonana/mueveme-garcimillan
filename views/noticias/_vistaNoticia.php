@@ -52,7 +52,7 @@ EOF;
             <p style="text-align: center" id="votos<?= $model->id ?>"><?= Html::encode($model->votos) ?></p>
         </td>
         <td>
-            <p><?= Html::encode($model->categoria->categoria) ?></p>
+            <p class="tag"><?= Html::encode($model->categoria->categoria) ?></p>
         </td>
     </tr>
 </table>

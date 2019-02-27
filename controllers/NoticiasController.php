@@ -7,6 +7,7 @@ use app\models\Noticias;
 use app\models\NoticiasSearch;
 use app\models\Votaciones;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -41,6 +42,7 @@ class NoticiasController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'listaCategorias' => $this->listaCategorias(),
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -156,5 +158,32 @@ class NoticiasController extends Controller
         }
 
         return false;
+    }
+
+    public function actionFiltrar($categoria_id)
+    {
+        $searchModel = new NoticiasSearch();
+
+        if (Yii::$app->request->isAjax) {
+            $query = Noticias::find()->where(['categoria_id' => $categoria_id]);
+
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+            ]);
+
+            return $this->renderAjax('_listaNoticias', [
+                'dataProvider' => $dataProvider,
+            ]);
+        }
+
+        $query = Noticias::find();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        return $this->renderAjax('_listaNoticias', [
+            'dataProvider' => $dataProvider,
+        ]);
     }
 }
