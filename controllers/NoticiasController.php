@@ -161,10 +161,11 @@ class NoticiasController extends Controller
 
     public function actionFiltrar($categoria_id)
     {
+        $searchModel = new NoticiasSearch();
+        $query = Noticias::find();
+
         if (Yii::$app->request->isAjax) {
-            $searchModel = new NoticiasSearch();
-            $query = Noticias::find()
-            ->where(['categoria_id' => $categoria_id]);
+            $query->andFilterWhere(['ilike', 'categoria_id', $categoria_id]);
 
             // $dataProvider = new ActiveDataProvider([
             //     'query' => $query,
@@ -173,6 +174,7 @@ class NoticiasController extends Controller
             $dataProvider = $searchModel->search($query->params);
 
             return $this->renderAjax('_listaNoticias', [
+                'query' => $query->params,
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
             ]);
