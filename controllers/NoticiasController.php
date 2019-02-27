@@ -41,6 +41,7 @@ class NoticiasController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'listaCategorias' => $this->listaCategorias(),
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -153,6 +154,15 @@ class NoticiasController extends Controller
                     return true;
                 }
             }
+        }
+
+        return false;
+    }
+
+    public function actionFiltrar($categoria_id)
+    {
+        if (Yii::$app->request->isAjax) {
+            return true;
         }
 
         return false;

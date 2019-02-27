@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ListView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\NoticiasSearch */
@@ -9,6 +9,29 @@ use yii\widgets\ListView;
 
 $this->title = 'Noticias';
 $this->params['breadcrumbs'][] = $this->title;
+
+$url = Url::to(['noticias/filtrar']);
+$usuario_id = Yii::$app->user->identity->id;
+$js = <<<EOF
+$('#botonCategorias').click(function(e){
+    e.preventDefault();
+    let categoriaId = $('#categorias > option:selected').attr('value');
+    $.ajax({
+        method: 'GET',
+        url: '$url',
+        data: {categoria_id: categoriaId},
+        success: function(result){
+            if (result) {
+                alert("ajax");
+            }else {
+                alert('no functiona');
+            }
+        }
+    });
+});
+EOF;
+$this->registerJs($js);
+
 ?>
 <div class="noticias-index">
 
@@ -16,9 +39,17 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Create Noticias', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= ListView::widget([
-        'dataProvider' => $dataProvider,
-        'itemOptions' => ['class' => 'item'],
-        'itemView' => '_vistaNoticia',
-    ]) ?>
+    <select id="categorias">
+        <option value="" disabled selected>Selecciona una categoria...</option>
+        <?php
+            foreach ($listaCategorias as $categoria => $valor) {
+                echo '<option value="' . $categoria . '">' . $valor . '</option>';
+            }
+        ?>
+    </select>
+
+    <button id="botonCategorias">Buscar</button>
+
+    <?= Yii::$app->controller->renderPartial('_listaNoticias', ['dataProvider' => $dataProvider]) ?>
+
 </div>
