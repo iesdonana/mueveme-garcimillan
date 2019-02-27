@@ -4,21 +4,20 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Comentarios */
+/* @var $model app\models\Votaciones */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Comentarios', 'url' => ['index']];
+$this->title = $model->usuario_id;
+$this->params['breadcrumbs'][] = ['label' => 'Votaciones', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="comentarios-view">
+<div class="votaciones-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?php if(Yii::$app->user->id === 1 || Yii::$app->user->id === $model->usuario->id ) { ?>
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Update', ['update', 'usuario_id' => $model->usuario_id, 'noticia_id' => $model->noticia_id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['delete', 'usuario_id' => $model->usuario_id, 'noticia_id' => $model->noticia_id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -26,16 +25,12 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-    <?php } ?>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'opinion:ntext',
             'usuario_id',
             'noticia_id',
-            'created_at',
         ],
     ]) ?>
 

@@ -2,25 +2,25 @@
 
 namespace app\models;
 
+use Yii;
+
 /**
- * This is the model class for table "comentarios".
+ * This is the model class for table "votaciones".
  *
- * @property int $id
- * @property string $opinion
  * @property int $usuario_id
  * @property int $noticia_id
- * @property string $created_at
  *
+ * @property Noticias $noticia
  * @property Usuarios $usuario
  */
-class Comentarios extends \yii\db\ActiveRecord
+class Votaciones extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'comentarios';
+        return 'votaciones';
     }
 
     /**
@@ -29,9 +29,11 @@ class Comentarios extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['opinion'], 'string'],
+            [['usuario_id', 'noticia_id'], 'required'],
             [['usuario_id', 'noticia_id'], 'default', 'value' => null],
             [['usuario_id', 'noticia_id'], 'integer'],
+            [['usuario_id', 'noticia_id'], 'unique', 'targetAttribute' => ['usuario_id', 'noticia_id']],
+            [['noticia_id'], 'exist', 'skipOnError' => true, 'targetClass' => Noticias::className(), 'targetAttribute' => ['noticia_id' => 'id']],
             [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['usuario_id' => 'id']],
         ];
     }
@@ -42,12 +44,17 @@ class Comentarios extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'opinion' => 'Opinion',
             'usuario_id' => 'Usuario ID',
             'noticia_id' => 'Noticia ID',
-            'created_at' => 'Created At',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getNoticia()
+    {
+        return $this->hasOne(Noticias::className(), ['id' => 'noticia_id'])->inverseOf('votaciones');
     }
 
     /**
@@ -55,6 +62,6 @@ class Comentarios extends \yii\db\ActiveRecord
      */
     public function getUsuario()
     {
-        return $this->hasOne(Usuarios::className(), ['id' => 'usuario_id'])->inverseOf('comentarios');
+        return $this->hasOne(Usuarios::className(), ['id' => 'usuario_id'])->inverseOf('votaciones');
     }
 }

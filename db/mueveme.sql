@@ -55,7 +55,20 @@ CREATE TABLE noticias
   , usuario_id       BIGINT            REFERENCES usuarios (id)
                                        ON DELETE NO ACTION
                                        ON UPDATE CASCADE
-  , created_at       DATE              DEFAULT CURRENT_TIMESTAMP
+  , created_at       DATE              NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+DROP TABLE IF EXISTS votaciones CASCADE;
+
+CREATE TABLE votaciones
+(
+    usuario_id    BIGINT    REFERENCES usuarios(id)
+                            ON DELETE CASCADE
+                            ON UPDATE CASCADE
+  , noticia_id    BIGINT    REFERENCES noticias(id)
+                            ON DELETE CASCADE
+                            ON UPDATE CASCADE
+  , PRIMARY KEY(usuario_id, noticia_id)
 );
 
 -- INSERTS
@@ -64,7 +77,11 @@ INSERT INTO usuarios (nombre, password, email)
 VALUES ('admin', crypt('admin', gen_salt('bf', 10)), 'admin@correo.com');
 
 INSERT INTO categorias (categoria)
-VALUES ('Peligro');
+VALUES ('Peligro'),
+      ('Deportes'),
+      ('Ciencia'),
+      ('Humor'),
+      ('Actualidad');
 
 INSERT INTO noticias (titulo, extracto, url, usuario_id, categoria_id)
 VALUES ('Zugasti, el terror del bandolerismo', 'Si para la historia han

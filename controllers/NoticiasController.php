@@ -5,7 +5,9 @@ namespace app\controllers;
 use app\models\Categorias;
 use app\models\Noticias;
 use app\models\NoticiasSearch;
+use app\models\Votaciones;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -40,6 +42,7 @@ class NoticiasController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'listaCategorias' => $this->listaCategorias(),
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -72,10 +75,15 @@ class NoticiasController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('create', [
-            'model' => $model,
-            'listaCategorias' => $listaCategorias,
-        ]);
+        if (!Yii::$app->user->isGuest) {
+            return $this->render('create', [
+                'model' => $model,
+                'listaCategorias' => $listaCategorias,
+            ]);
+        }
+
+        Yii::$app->session->setFlash('error', 'Debes estar logeado para crear una noticia');
+        return $this->goBack();
     }
 
     /**
@@ -134,5 +142,48 @@ class NoticiasController extends Controller
             ->select('categoria')
             ->indexBy('id')
             ->column();
+    }
+
+    public function actionVotar($noticia_id, $usuario_id)
+    {
+        $noticia = $this->findModel($noticia_id);
+        $model = new Votaciones(['usuario_id' => $usuario_id, 'noticia_id' => $noticia_id]);
+        if (Yii::$app->request->isAjax) {
+            if ($model->save()) {
+                $noticia->votos++;
+                if ($noticia->save()) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public function actionFiltrar($categoria_id)
+    {
+        $searchModel = new NoticiasSearch();
+
+        if (Yii::$app->request->isAjax) {
+            $query = Noticias::find()->where(['categoria_id' => $categoria_id]);
+
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+            ]);
+
+            return $this->renderAjax('_listaNoticias', [
+                'dataProvider' => $dataProvider,
+            ]);
+        }
+
+        $query = Noticias::find();
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        return $this->renderAjax('_listaNoticias', [
+            'dataProvider' => $dataProvider,
+        ]);
     }
 }

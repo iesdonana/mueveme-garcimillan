@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ListView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\NoticiasSearch */
@@ -9,16 +9,66 @@ use yii\widgets\ListView;
 
 $this->title = 'Noticias';
 $this->params['breadcrumbs'][] = $this->title;
+
+$url = Url::to(['noticias/filtrar']);
+$js = <<<EOF
+$('#botonCategorias').click(function(e){
+    e.preventDefault();
+    let categoriaId = parseInt($('#categorias > option:selected').attr('value'));
+    console.log(categoriaId);
+    $.ajax({
+        method: 'GET',
+        url: '$url',
+        data: {categoria_id: categoriaId},
+        success: function(data){
+            if (data) {
+                $("#listaNoticias").html(data);
+            }else {
+                alert('no functiona');
+            }
+        }
+    });
+});
+EOF;
+$this->registerJs($js);
+
 ?>
+
+<style media="screen">
+    .tag {
+      background: #eee;
+      border-radius: 10px 10px 10px 10px;
+      color: #999;
+      display: inline-block;
+      line-height: 26px;
+      padding: 0 20px 0 23px;
+      position: relative;
+      margin: 0 10px 10px 0;
+    }
+    .tag:hover {
+      background-color: crimson;
+      color: white;
+    }
+</style>
 <div class="noticias-index">
 
     <p>
         <?= Html::a('Create Noticias', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?= ListView::widget([
-        'dataProvider' => $dataProvider,
-        'itemOptions' => ['class' => 'item'],
-        'itemView' => '_vistaNoticia',
-    ]) ?>
+    <select id="categorias">
+        <option value="" disabled selected>Selecciona una categoria...</option>
+        <?php
+            foreach ($listaCategorias as $categoria => $valor) {
+                echo '<option value="' . $categoria . '">' . $valor . '</option>';
+            }
+        ?>
+    </select>
+
+    <button id="botonCategorias">Buscar</button>
+
+    <div id="listaNoticias">
+        <?= Yii::$app->controller->renderPartial('_listaNoticias', ['dataProvider' => $dataProvider]) ?>
+    </div>
+
 </div>

@@ -21,8 +21,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?= $form->field($model, 'titulo')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'votos')->textInput() ?>
-
         <?= $form->field($model, 'extracto')->textarea(['rows' => 6]) ?>
 
         <?= $form->field($model, 'categoria_id')->widget(Select2::classname(), [
@@ -36,7 +34,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?= $form->field($model, 'url')->textInput() ?>
 
-        <?= $form->field($model, 'usuario_id')->textInput() ?>
+        <?= $form->field($model, 'usuario_id')->textInput([
+            'readonly' => true,
+            'value' => Yii::$app->user->identity->id,
+        ]);
+        ?>
+
 
         <div class="form-group">
             <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
