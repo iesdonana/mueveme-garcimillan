@@ -165,6 +165,12 @@ class NoticiasController extends Controller
         $query = Noticias::find();
 
         if (Yii::$app->request->isAjax) {
+<<<<<<< HEAD
+=======
+            $searchModel = new NoticiasSearch();
+            $query = Noticias::find();
+
+>>>>>>> 7a7e04aa735aace56fea3c3d27d8dce51a2b2328
             $query->andFilterWhere(['ilike', 'categoria_id', $categoria_id]);
 
             // $dataProvider = new ActiveDataProvider([
