@@ -29,6 +29,22 @@ EOF;
     $this->registerJs($js);
 }
 ?>
+<style media="screen">
+    .tag {
+      background: #eee;
+      border-radius: 10px 10px 10px 10px;
+      color: #999;
+      display: inline-block;
+      line-height: 26px;
+      padding: 0 20px 0 23px;
+      position: relative;
+      margin: 0 10px 10px 0;
+    }
+    .tag:hover {
+      background-color: crimson;
+      color: white;
+    }
+</style>
 
 <table border="0">
     <tr>
@@ -52,7 +68,7 @@ EOF;
             <p style="text-align: center" id="votos<?= $model->id ?>"><?= Html::encode($model->votos) ?></p>
         </td>
         <td>
-            <p><?= Html::encode($model->categoria->categoria) ?></p>
+            <p class="tag"><?= Html::encode($model->categoria->categoria) ?></p>
         </td>
     </tr>
 </table>
