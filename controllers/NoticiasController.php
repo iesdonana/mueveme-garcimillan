@@ -162,7 +162,20 @@ class NoticiasController extends Controller
     public function actionFiltrar($categoria_id)
     {
         if (Yii::$app->request->isAjax) {
-            return true;
+            $searchModel = new NoticiasSearch();
+            $query = Noticias::find()
+            ->where(['categoria_id' => $categoria_id]);
+
+            // $dataProvider = new ActiveDataProvider([
+            //     'query' => $query,
+            // ]);
+
+            $dataProvider = $searchModel->search($query->params);
+
+            return $this->renderAjax('_listaNoticias', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
         }
 
         return false;

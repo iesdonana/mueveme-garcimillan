@@ -20,9 +20,10 @@ $('#botonCategorias').click(function(e){
         method: 'GET',
         url: '$url',
         data: {categoria_id: categoriaId},
-        success: function(result){
+        success: function(data){
             if (result) {
-                alert("ajax");
+                $("#listaNoticias").html(data);
+                alert("bien");
             }else {
                 alert('no functiona');
             }
@@ -50,6 +51,8 @@ $this->registerJs($js);
 
     <button id="botonCategorias">Buscar</button>
 
-    <?= Yii::$app->controller->renderPartial('_listaNoticias', ['dataProvider' => $dataProvider]) ?>
+    <div id="listaNoticias">
+        <?= Yii::$app->controller->renderPartial('_listaNoticias', ['dataProvider' => $dataProvider]) ?>
+    </div>
 
 </div>
