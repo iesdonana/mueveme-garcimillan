@@ -71,7 +71,7 @@ $this->registerJs($js);
     <button id="botonCategorias">Buscar</button>
 
     <div id="listaNoticias">
-        <?= Yii::$app->controller->renderPartial('_listaNoticias', ['dataProvider' => $dataProvider]) ?>
+        <?= Yii::$app->controller->renderPartial('_listaNoticias', ['dataProvider' => $dataProvider, 'query' => ['Hola']]) ?>
     </div>
 
 </div>
