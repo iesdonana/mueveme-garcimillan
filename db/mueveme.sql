@@ -74,7 +74,7 @@ CREATE TABLE votaciones
 -- INSERTS
 
 INSERT INTO usuarios (nombre, password, email)
-VALUES ('admin', crypt('admin', gen_salt('bf', 10)), 'admin@correo.com');
+VALUES ('admin', crypt('2daw', gen_salt('bf', 10)), 'admin@correo.com');
 
 INSERT INTO categorias (categoria)
 VALUES ('Peligro'),
