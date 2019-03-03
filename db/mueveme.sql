@@ -16,21 +16,6 @@ CREATE TABLE usuarios
   , email         VARCHAR(255)       NOT NULL
 );
 
-DROP TABLE IF EXISTS comentarios CASCADE;
-
-CREATE TABLE comentarios
-(
-    id          BIGSERIAL     PRIMARY KEY
-  , opinion     TEXT
-  , usuario_id  BIGINT        REFERENCES usuarios (id)
-                              ON DELETE NO ACTION
-                              ON UPDATE CASCADE
-  , noticia_id  BIGINT        REFERENCES noticias (id)
-                              ON DELETE NO ACTION
-                              ON UPDATE CASCADE
-  , created_at  DATE          NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
-
 DROP TABLE IF EXISTS categorias CASCADE;
 
 CREATE TABLE categorias
@@ -56,6 +41,21 @@ CREATE TABLE noticias
                                        ON DELETE NO ACTION
                                        ON UPDATE CASCADE
   , created_at       DATE              NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+DROP TABLE IF EXISTS comentarios CASCADE;
+
+CREATE TABLE comentarios
+(
+  id          BIGSERIAL     PRIMARY KEY
+  , opinion     TEXT
+  , usuario_id  BIGINT        REFERENCES usuarios (id)
+  ON DELETE NO ACTION
+  ON UPDATE CASCADE
+  , noticia_id  BIGINT        REFERENCES noticias (id)
+  ON DELETE NO ACTION
+  ON UPDATE CASCADE
+  , created_at  DATE          NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 DROP TABLE IF EXISTS votaciones CASCADE;

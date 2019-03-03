@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use Yii;
+
 /**
  * This is the model class for table "comentarios".
  *
@@ -11,6 +13,7 @@ namespace app\models;
  * @property int $noticia_id
  * @property string $created_at
  *
+ * @property Noticias $noticia
  * @property Usuarios $usuario
  */
 class Comentarios extends \yii\db\ActiveRecord
@@ -32,6 +35,8 @@ class Comentarios extends \yii\db\ActiveRecord
             [['opinion'], 'string'],
             [['usuario_id', 'noticia_id'], 'default', 'value' => null],
             [['usuario_id', 'noticia_id'], 'integer'],
+            [['created_at'], 'safe'],
+            [['noticia_id'], 'exist', 'skipOnError' => true, 'targetClass' => Noticias::className(), 'targetAttribute' => ['noticia_id' => 'id']],
             [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['usuario_id' => 'id']],
         ];
     }
@@ -53,8 +58,16 @@ class Comentarios extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getNoticia()
+    {
+        return $this->hasOne(Noticias::className(), ['id' => 'noticia_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getUsuario()
     {
-        return $this->hasOne(Usuarios::className(), ['id' => 'usuario_id'])->inverseOf('comentarios');
+        return $this->hasOne(Usuarios::className(), ['id' => 'usuario_id']);
     }
 }

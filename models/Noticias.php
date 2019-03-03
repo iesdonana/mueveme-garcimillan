@@ -91,4 +91,12 @@ class Noticias extends \yii\db\ActiveRecord
     {
         return file_exists(Yii::getAlias('@uploads/' . $this->id . '.jpg'));
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getComentarios()
+    {
+        return $this->hasMany(Comentarios::className(), ['noticia_id' => 'id']);
+    }
 }
