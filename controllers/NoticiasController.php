@@ -9,7 +9,6 @@ use app\models\Votaciones;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\VerbFilter;
-use yii\imagine\Image;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
@@ -77,7 +76,6 @@ class NoticiasController extends Controller
             $file = 'uploads/' . $model->id . '.jpg';
             $model->imagen = UploadedFile::getInstance($model, 'imagen');
             $model->imagen->saveAs($file);
-            Image::resize($file, 100, null)->save($file);
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

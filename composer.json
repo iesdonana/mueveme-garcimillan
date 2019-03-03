@@ -23,8 +23,7 @@
         "kartik-v/yii2-widget-select2": "dev-master",
         "spatie/dropbox-api": "^1.7",
         "spatie/flysystem-dropbox": "^1.0",
-        "yiisoft/yii2-debug": "dev-master",
-        "imagine/imagine": "^1.2"
+        "yiisoft/yii2-debug": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-gii": "dev-master",
