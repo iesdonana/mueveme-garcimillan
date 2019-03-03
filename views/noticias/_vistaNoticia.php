@@ -29,6 +29,12 @@ EOF;
     $this->registerJs($js);
 }
 ?>
+<style media="screen">
+    #columnaFoto{
+        position: relative;
+        right: 0;
+    }
+</style>
 
 <table border="0">
     <tr>
@@ -38,6 +44,7 @@ EOF;
         <th>
             <h2><?= Html::a(Html::encode($model->titulo), ['noticias/view', 'id' => $model->id]); ?></h2>
         </th>
+        <th rowspan="3" id="columnaFoto"><?= Html::img($model->urlImagen, ['height' => 100, 'width' => 200]) ?></th>
     </tr>
     <tr>
         <td>

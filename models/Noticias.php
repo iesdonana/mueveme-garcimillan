@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use Yii;
+
 /**
  * This is the model class for table "noticias".
  *
@@ -82,11 +84,11 @@ class Noticias extends \yii\db\ActiveRecord
 
     public function getUrlImagen()
     {
-        return $this->tieneImagen() ? Yii::getAlias('@uploadsUrl' . $this->id . '.jpg') : null;
+        return $this->tieneImagen() ? Yii::getAlias('@uploadsUrl/' . $this->id . '.jpg') : null;
     }
 
     public function tieneImagen()
     {
-        return file_exists(Yii::getAlias('@uploadsUrl' . $this->id . '.jpg'));
+        return file_exists(Yii::getAlias('@uploads/' . $this->id . '.jpg'));
     }
 }
