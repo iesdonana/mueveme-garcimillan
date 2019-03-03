@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use Yii;
+
 /**
  * This is the model class for table "noticias".
  *
@@ -19,6 +21,8 @@ namespace app\models;
  */
 class Noticias extends \yii\db\ActiveRecord
 {
+    public $imagen;
+
     /**
      * {@inheritdoc}
      */
@@ -41,6 +45,7 @@ class Noticias extends \yii\db\ActiveRecord
             [['titulo'], 'string', 'max' => 255],
             [['categoria_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categorias::className(), 'targetAttribute' => ['categoria_id' => 'id']],
             [['usuario_id'], 'exist', 'skipOnError' => true, 'targetClass' => Usuarios::className(), 'targetAttribute' => ['usuario_id' => 'id']],
+            [['imagen'], 'file', 'extensions' => 'jpg'],
         ];
     }
 
@@ -75,5 +80,15 @@ class Noticias extends \yii\db\ActiveRecord
     public function getUsuario()
     {
         return $this->hasOne(Usuarios::className(), ['id' => 'usuario_id'])->inverseOf('noticias');
+    }
+
+    public function getUrlImagen()
+    {
+        return $this->tieneImagen() ? Yii::getAlias('@uploadsUrl/' . $this->id . '.jpg') : null;
+    }
+
+    public function tieneImagen()
+    {
+        return file_exists(Yii::getAlias('@uploads/' . $this->id . '.jpg'));
     }
 }
