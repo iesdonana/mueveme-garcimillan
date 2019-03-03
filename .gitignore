@@ -41,6 +41,3 @@ tests/chromedriver
 
 #migrations
 migrations
-
-#uploads
-web/uploads
