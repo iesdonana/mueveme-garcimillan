@@ -40,6 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ]);
         ?>
 
+        <?= $form->field($model, 'imagen')->fileInput() ?>
 
         <div class="form-group">
             <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

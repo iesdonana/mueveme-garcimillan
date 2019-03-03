@@ -9,8 +9,10 @@ use app\models\Votaciones;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\VerbFilter;
+use yii\imagine\Image;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 
 /**
  * NoticiasController implements the CRUD actions for Noticias model.
@@ -72,18 +74,22 @@ class NoticiasController extends Controller
         $listaCategorias = $this->listaCategorias();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $file = 'uploads/' . $model->id . '.jpg';
+            $model->imagen = UploadedFile::getInstance($model, 'imagen');
+            $model->imagen->saveAs($file);
+            Image::resize($file, 100, null)->save($file);
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        if (!Yii::$app->user->isGuest) {
-            return $this->render('create', [
-                'model' => $model,
-                'listaCategorias' => $listaCategorias,
-            ]);
+        if (Yii::$app->user->isGuest) {
+            Yii::$app->session->setFlash('error', 'Debes estar logeado para crear una noticia');
+            return $this->goBack();
         }
 
-        Yii::$app->session->setFlash('error', 'Debes estar logeado para crear una noticia');
-        return $this->goBack();
+        return $this->render('create', [
+            'model' => $model,
+            'listaCategorias' => $listaCategorias,
+        ]);
     }
 
     /**
