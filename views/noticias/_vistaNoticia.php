@@ -20,7 +20,7 @@ if (!Yii::$app->user->isGuest) {
                     let x = parseInt($("#votos" + noticia_id).text())+1;
                     $("#votos" + noticia_id).html(x);
                 }else {
-                    alert('No se puede votar la pelicula mas de una vez!');
+                    alert('No se puede votar la noticia mas de una vez!');
                 }
             }
         });
