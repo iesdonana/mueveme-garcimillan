@@ -11,6 +11,47 @@ $this->params['breadcrumbs'][] = ['label' => 'Noticias', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
+<style media="screen">
+    #comentariosTodos, .comentario {
+      background-color: rgb(44, 117, 234, 0.2);
+      padding: 10px;
+    }
+
+    #newCom textarea{
+      resize: none;
+      display: inline-block;
+    }
+
+    #newCom p{
+      background-color: rgb(44, 117, 234, 0.2);
+      padding: 5px;
+      display: inline-block;
+    }
+
+    .comentario{
+        padding: 10px;
+        width: 100%;
+    }
+
+    .comentario th, .respuesta th{
+        padding: 5px;
+    }
+
+    .comentarioTiempo{
+        position: absolute;
+        right: 25px
+    }
+
+    .comentarioTexto{
+        padding: 10px;
+        width: 100%
+    }
+
+    .respuesta table{
+        width: 100%;
+    }
+</style>
+
 <div class="noticias-view">
 
     <table border="0">
@@ -70,4 +111,61 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Actualizar Noticia', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
     </p>
     <?php } ?>
+</div>
+
+<br><br>
+
+<div id="comentariosTodos" class="col-md-8">
+  <div id="newCom">
+    <p>Envía un comentario</p>
+    </br>
+    <textarea name="textoCom" rows="4" cols="80"></textarea>
+    </br>
+    <button type="submit" name="enviarCom">Enviar</button>
+  </div>
+    <br><br>
+  <div>
+    <?php foreach ($model->comentarios as $comentarioId => $comentario) {
+        if($comentario->padre_id === null){
+        ?>
+            <table class="comentario" border="0">
+                <tr>
+                    <th>
+                        <?= $comentario->usuario->nombre ?> dice:
+                    </th>
+                </tr>
+                <tr>
+                    <td class="comentarioTexto">
+                        <?= $comentario->opinion ?>
+                        <span class="comentarioTiempo"><?= Yii::$app->formatter->asRelativeTime($comentario->created_at) ?></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <?= Html::a("Responder") ?>
+                    </td>
+                </tr>
+            </table>
+        <?php } ?>
+        <?php foreach ($model->comentarios as $comentarioId2 => $comentario2){
+            if($comentario->id == $comentario2->padre_id && $comentario->id != $comentario2->id){ ?>
+                <span class="respuesta">
+                    <table border="1">
+                        <tr>
+                            <th>
+                                <?= $comentario2->usuario->nombre ?> dice:
+                            </th>
+                        </tr>
+                        <tr>
+                            <td class="comentarioTexto">
+                                <?= $comentario2->opinion ?>
+                                <span class="comentarioTiempo"><?= Yii::$app->formatter->asRelativeTime($comentario2->created_at) ?></span>
+                            </td>
+                        </tr>
+                    </table>
+                </span>
+        <?php }
+        } ?>
+        <?php } ?>
+  </div>
 </div>

@@ -136,7 +136,7 @@ class NoticiasController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Noticias::findOne($id)) !== null) {
+        if (($model = Noticias::find($id)->with('comentarios')->one()) !== null) {
             return $model;
         }
 

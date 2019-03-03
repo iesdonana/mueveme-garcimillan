@@ -50,12 +50,14 @@ CREATE TABLE comentarios
   id          BIGSERIAL     PRIMARY KEY
   , opinion     TEXT
   , usuario_id  BIGINT        REFERENCES usuarios (id)
-  ON DELETE NO ACTION
-  ON UPDATE CASCADE
+                              ON DELETE NO ACTION
+                              ON UPDATE CASCADE
   , noticia_id  BIGINT        REFERENCES noticias (id)
-  ON DELETE NO ACTION
-  ON UPDATE CASCADE
-  , created_at  DATE          NOT NULL DEFAULT CURRENT_TIMESTAMP
+                              ON DELETE NO ACTION
+                              ON UPDATE CASCADE
+  , padre_id    BIGINT        REFERENCES comentarios (id)
+  , votos       NUMERIC(9)    NOT NULL DEFAULT 0
+  , created_at  TIMESTAMP     NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 DROP TABLE IF EXISTS votaciones CASCADE;
@@ -87,5 +89,6 @@ INSERT INTO noticias (titulo, extracto, url, usuario_id, categoria_id)
 VALUES ('Zugasti, el terror del bandolerismo', 'Si para la historia han
  quedado los nombres y hechos de un gran número de bandoleros, este...', 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',  1, 1);
 
-INSERT INTO comentarios (opinion, usuario_id, noticia_id)
-VALUES ('Que mala noticia', 1, 1);
+INSERT INTO comentarios (opinion, usuario_id, noticia_id, padre_id)
+VALUES ('Que mala noticia', 1, 1, null),
+       ('Ya ves, es malisima', 1, 1, 1);
