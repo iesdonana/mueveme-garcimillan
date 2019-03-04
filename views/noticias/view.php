@@ -48,7 +48,9 @@ $this->params['breadcrumbs'][] = $this->title;
     }
 
     .respuesta table{
-        width: 100%;
+        width: 98%;
+        position: relative;
+        left: 2%;
     }
 </style>
 
@@ -150,7 +152,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php foreach ($model->comentarios as $comentarioId2 => $comentario2){
             if($comentario->id == $comentario2->padre_id && $comentario->id != $comentario2->id){ ?>
                 <span class="respuesta">
-                    <table border="1">
+                    <table border="0">
                         <tr>
                             <th>
                                 <?= $comentario2->usuario->nombre ?> dice:
