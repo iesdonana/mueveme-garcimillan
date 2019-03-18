@@ -12,24 +12,24 @@ $this->params['breadcrumbs'][] = ['label' => 'Noticias', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 
-$url = Url::to(['noticias/comentar']);
-$js = <<<EOF
-$("#newCom button").on('click', function(){
-    var cuerpoComentario = $("#newCom textarea").val();
-    $.ajax({
-        method: 'GET',
-        url: '$url',
-        data: {textoCom: cuerpoComentario, noticia_id: $model->id},
-        success: function(data){
-            if (data) {
-                alert("comentado con exito"+data);
-            }else {
-                alert('ERROR: comentario fallido!');
-            }
-        }
-    });
-});
-EOF;
+// $url = Url::to(['noticias/comentar']);
+// $js = <<<EOF
+// $("#newCom button").on('click', function(){
+//     var cuerpoComentario = $("#newCom textarea").val();
+//     $.ajax({
+//         method: 'GET',
+//         url: '$url',
+//         data: {textoCom: cuerpoComentario, noticia_id: $model->id},
+//         success: function(data){
+//             if (data) {
+//                 alert("comentado con exito"+data);
+//             }else {
+//                 alert('ERROR: comentario fallido!');
+//             }
+//         }
+//     });
+// });
+// EOF;
 $this->registerJs($js);
 ?>
 <style media="screen">
@@ -147,7 +147,9 @@ $this->registerJs($js);
     </br>
     <textarea name="textoCom" rows="4" cols="80"></textarea>
     </br>
-    <button type="submit" name="enviarCom">Enviar</button>
+    <?php
+    
+     ?>
   </div>
     <br><br>
   <div>

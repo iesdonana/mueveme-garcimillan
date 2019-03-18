@@ -192,7 +192,9 @@ class NoticiasController extends Controller
         Yii::$app->session->setFlash('success', 'Comentario guardado con exito!') :
         Yii::$app->session->setFlash('error', 'Error Guardando el comentario');
 
-        return $this->render;
+        return $this->render('view', [
+            'model' => $this->findModel($noticia_id),
+        ]);
     }
 
     /**
