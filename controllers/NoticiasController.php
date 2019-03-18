@@ -3,12 +3,12 @@
 namespace app\controllers;
 
 use app\models\Categorias;
+use app\models\Comentarios;
 use app\models\Noticias;
 use app\models\NoticiasSearch;
 use app\models\Votaciones;
 use Yii;
 use yii\data\ActiveDataProvider;
-use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
@@ -25,9 +25,19 @@ class NoticiasController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
+                'class' => \yii\filters\AccessControl::className(),
+                'only' => ['comentar', 'delete'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['comentar'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['delete'],
+                        'verbs' => ['POST'],
+                    ],
                 ],
             ],
         ];
@@ -127,30 +137,6 @@ class NoticiasController extends Controller
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the Noticias model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id
-     * @return Noticias the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
-    {
-        if (($model = Noticias::find($id)->with('comentarios')->one()) !== null) {
-            return $model;
-        }
-
-        throw new NotFoundHttpException('The requested page does not exist.');
-    }
-
-    private function listaCategorias()
-    {
-        return Categorias::find()
-            ->select('categoria')
-            ->indexBy('id')
-            ->column();
-    }
-
     public function actionVotar($noticia_id, $usuario_id)
     {
         $noticia = $this->findModel($noticia_id);
@@ -192,5 +178,44 @@ class NoticiasController extends Controller
         return $this->renderAjax('_listaNoticias', [
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    public function actionComentar($textoCom, $noticia_id)
+    {
+        $model = new Comentarios();
+        $model->usuario_id = Yii::$app->user->id;
+        $model->noticia_id = $noticia_id;
+        $model->opinion = $textoCom;
+        // $model->load(Yii::$app->request->post());
+
+        $model->save() ?
+        Yii::$app->session->setFlash('success', 'Comentario guardado con exito!') :
+        Yii::$app->session->setFlash('error', 'Error Guardando el comentario');
+
+        return $this->render;
+    }
+
+    /**
+     * Finds the Noticias model based on its primary key value.
+     * If the model is not found, a 404 HTTP exception will be thrown.
+     * @param int $id
+     * @return Noticias the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id)
+    {
+        if (($model = Noticias::find($id)->with('comentarios')->one()) !== null) {
+            return $model;
+        }
+
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    private function listaCategorias()
+    {
+        return Categorias::find()
+            ->select('categoria')
+            ->indexBy('id')
+            ->column();
     }
 }

@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Noticias */
@@ -10,6 +11,26 @@ $this->title = $model->titulo;
 $this->params['breadcrumbs'][] = ['label' => 'Noticias', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+
+$url = Url::to(['noticias/comentar']);
+$js = <<<EOF
+$("#newCom button").on('click', function(){
+    var cuerpoComentario = $("#newCom textarea").val();
+    $.ajax({
+        method: 'GET',
+        url: '$url',
+        data: {textoCom: cuerpoComentario, noticia_id: $model->id},
+        success: function(data){
+            if (data) {
+                alert("comentado con exito"+data);
+            }else {
+                alert('ERROR: comentario fallido!');
+            }
+        }
+    });
+});
+EOF;
+$this->registerJs($js);
 ?>
 <style media="screen">
     #comentariosTodos, .comentario {
@@ -74,7 +95,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 <table border="0">
                     <tr>
                         <td>
-                            <h2><?= Html::a(Html::encode($model->titulo), Html::encode($model->url)); ?></h2>
+                            <h2><?= Html::a(Html::encode($model->titulo),
+                            Html::encode($model->url)); ?></h2>
                         </td>
                     </tr>
                     <tr>
@@ -84,7 +106,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     </tr>
                     <tr>
                         <td>
-                             <p>Publicado por: <?= Html::encode($model->usuario->nombre) ?> el <?= Html::encode($model->created_at) ?></p>
+                             <p>Publicado por:
+                                 <?= Html::encode($model->usuario->nombre) ?>
+                                  el <?= Html::encode($model->created_at) ?></p>
                         </td>
                     </tr>
                     <tr>
