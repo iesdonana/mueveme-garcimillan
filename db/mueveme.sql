@@ -53,7 +53,7 @@ CREATE TABLE comentarios
                               ON DELETE NO ACTION
                               ON UPDATE CASCADE
   , noticia_id  BIGINT        REFERENCES noticias (id)
-                              ON DELETE NO ACTION
+                              ON DELETE CASCADE
                               ON UPDATE CASCADE
   , padre_id    BIGINT        REFERENCES comentarios (id)
   , votos       NUMERIC(9)    NOT NULL DEFAULT 0

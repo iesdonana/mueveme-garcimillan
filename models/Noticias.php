@@ -97,6 +97,6 @@ class Noticias extends \yii\db\ActiveRecord
      */
     public function getComentarios()
     {
-        return $this->hasMany(Comentarios::className(), ['noticia_id' => 'id']);
+        return $this->hasMany(Comentarios::className(), ['noticia_id' => 'id'])->orderBy(['created_at' => SORT_DESC]);
     }
 }

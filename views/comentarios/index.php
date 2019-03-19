@@ -13,20 +13,30 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="comentarios-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
         <?= Html::a('Create Comentarios', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+
+            'id',
+            'opinion:ntext',
             'usuario_id',
             'noticia_id',
-            'opinion:ntext',
-            'created_at',
+            'padre_id',
+            //'votos',
+            //'created_at',
+
+            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+
+
 </div>

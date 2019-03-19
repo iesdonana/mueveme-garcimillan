@@ -3,7 +3,6 @@
 namespace app\controllers;
 
 use app\models\Categorias;
-use app\models\Comentarios;
 use app\models\Noticias;
 use app\models\NoticiasSearch;
 use app\models\Votaciones;
@@ -82,10 +81,13 @@ class NoticiasController extends Controller
         $model = new Noticias();
         $listaCategorias = $this->listaCategorias();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
             $file = 'uploads/' . $model->id . '.jpg';
             $model->imagen = UploadedFile::getInstance($model, 'imagen');
             $model->imagen->saveAs($file);
+            if (!$model->save()) {
+                Yii::$app->session->setFlash('error', 'No se ha guardado correctamente');
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -177,23 +179,6 @@ class NoticiasController extends Controller
 
         return $this->renderAjax('_listaNoticias', [
             'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    public function actionComentar($textoCom, $noticia_id)
-    {
-        $model = new Comentarios();
-        $model->usuario_id = Yii::$app->user->id;
-        $model->noticia_id = $noticia_id;
-        $model->opinion = $textoCom;
-        // $model->load(Yii::$app->request->post());
-
-        $model->save() ?
-        Yii::$app->session->setFlash('success', 'Comentario guardado con exito!') :
-        Yii::$app->session->setFlash('error', 'Error Guardando el comentario');
-
-        return $this->render('view', [
-            'model' => $this->findModel($noticia_id),
         ]);
     }
 

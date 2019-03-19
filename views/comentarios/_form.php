@@ -18,6 +18,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'noticia_id')->textInput() ?>
 
+    <?= $form->field($model, 'padre_id')->textInput() ?>
+
+    <?= $form->field($model, 'votos')->textInput() ?>
+
     <?= $form->field($model, 'created_at')->textInput() ?>
 
     <div class="form-group">
