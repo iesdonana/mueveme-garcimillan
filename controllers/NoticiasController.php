@@ -194,30 +194,15 @@ class NoticiasController extends Controller
         ]);
     }
 
-    public function actionCategorias($categoria_nom)
+    public function actionCategorias($categoria_id)
     {
-        $searchModel = new CategoriasSearch();
-
-        if (Yii::$app->request->isAjax) {
-            $query = Categorias::find()->where(['categoria' ilike $categoria_nom]);
-
-            $dataProvider = new ActiveDataProvider([
-                'query' => $query,
-            ]);
-
-            return $this->renderAjax('_listaNoticias', [
-                'dataProvider' => $dataProvider,
-            ]);
-        }
-
-        $query = Noticias::find();
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
+        $adp = new ActiveDataProvider([
+                'query' => Categorias::find()
+                    ->where(['ilike', 'categoria', $categoria_id]),
         ]);
 
-        return $this->renderAjax('_listaNoticias', [
-            'dataProvider' => $dataProvider,
+        return GridView::widget([
+            'dataProvider' => $adp,
         ]);
     }
 }

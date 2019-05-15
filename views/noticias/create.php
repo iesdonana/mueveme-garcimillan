@@ -9,16 +9,13 @@ $url = Url::to(['noticias/categorias']);
 $js = <<<EOF
     $("#noticias-categoria_id").on('change.yii', function(e){
         var categoria_id = $(e.target).val();
-        var termino = document.getElementById('noticias-categoria_id');
-        if (categoria_id != '') {
             $.ajax({
                 url: '$url',
                 data: {categoria_id: categoria_id},
                 success: function (data) {
-                    alert("hola");
+                    $("#rejilla").html(data);
                 }
             });
-        }
     });
 EOF;
 $this->registerJs($js);
@@ -41,7 +38,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?= $form->field($model, 'extracto')->textarea(['rows' => 6]) ?>
 
-        <?= $form->field($model, 'categoria_id')->textInput(['maxlength' => true]) ?>
+        <?= $form->field($model, 'categoria_id')->textInput() ?>
+
+        <div id="rejilla"></div>
 
         <?= $form->field($model, 'url')->textInput() ?>
 
