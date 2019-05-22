@@ -36,22 +36,23 @@ $this->registerJs($js);
     <?= $form->field($model, 'categoria_id')->widget(Select2::classname(), [
         'language' => 'es',
         'options' => ['placeholder' => 'Selecciona una categoría...'],
+        'initValueText' => $initValueText,
         'pluginOptions' => [
-        'allowClear' => true,
-        'minimumInputLength' => 3,
-        'language' => [
-            'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
+            'allowClear' => true,
+            'minimumInputLength' => 3,
+            'language' => [
+                'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
+            ],
+            'ajax' => [
+                'url' => $url,
+                'dataType' => 'json',
+                'data' => new JsExpression('function(params) { return {q:params.term}; }')
+            ],
+            'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+            'templateResult' => new JsExpression('function(city) { return city.text; }'),
+            'templateSelection' => new JsExpression('function (city) { return city.text; }'),
         ],
-        'ajax' => [
-            'url' => $url,
-            'dataType' => 'json',
-            'data' => new JsExpression('function(params) { return {q:params.term}; }')
-        ],
-        'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
-        'templateResult' => new JsExpression('function(city) { return city.text; }'),
-        'templateSelection' => new JsExpression('function (city) { return city.text; }'),
-
-    ]]);?>
+    ]);?>
 
     <?= $form->field($model, 'url')->textInput() ?>
 

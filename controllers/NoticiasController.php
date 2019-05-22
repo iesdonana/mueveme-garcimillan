@@ -78,11 +78,7 @@ class NoticiasController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        if (empty($model->categoria_id)) {
-            $initValueText = '';
-        } else {
-            $initValueText = empty($model->categoria_id) ? '' : Categorias::findOne($model->categoria_id)->categoria;
-        }
+        $initValueText = empty($model->categoria_id) ? '' : Categorias::findOne($model->categoria_id)->categoria;
 
         return $this->render('create', [
             'model' => $model,
@@ -108,11 +104,7 @@ class NoticiasController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        if (empty($model->categoria_id)) {
-            $initValueText = '';
-        } else {
-            $initValueText = empty($model->categoria_id) ? '' : Categorias::findOne($model->categoria_id)->categoria;
-        }
+        $initValueText = empty($model->categoria_id) ? '' : Categorias::findOne($model->categoria_id)->categoria;
 
         return $this->render('update', [
             'model' => $model,

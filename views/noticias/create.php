@@ -6,8 +6,6 @@ use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
 use yii\web\JsExpression;
 
-
-
 /* @var $this yii\web\View */
 /* @var $model app\models\Noticias */
 
