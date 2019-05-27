@@ -70,7 +70,6 @@ class NoticiasController extends Controller
     public function actionCreate()
     {
         $model = new Noticias();
-        $listaCategorias = $this->listaCategorias();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $file = 'uploads/' . $model->id . '.jpg';
@@ -79,14 +78,11 @@ class NoticiasController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        if (Yii::$app->user->isGuest) {
-            Yii::$app->session->setFlash('error', 'Debes estar logeado para crear una noticia');
-            return $this->goBack();
-        }
+        $initValueText = empty($model->categoria_id) ? '' : Categorias::findOne($model->categoria_id)->categoria;
 
         return $this->render('create', [
             'model' => $model,
-            'listaCategorias' => $listaCategorias,
+            'initValueText' => $initValueText,
         ]);
     }
 
@@ -108,8 +104,11 @@ class NoticiasController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $initValueText = empty($model->categoria_id) ? '' : Categorias::findOne($model->categoria_id)->categoria;
+
         return $this->render('update', [
             'model' => $model,
+            'initValueText' => $initValueText,
         ]);
     }
 
@@ -125,6 +124,25 @@ class NoticiasController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionCategorias($q = null, $id = null)
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $out = ['results' => ['id' => '', 'text' => '']];
+        if ($q !== null) {
+            $out['results'] = Categorias::find()
+                ->select('id, categoria AS text')
+                ->where(['ilike', 'categoria', $q])
+                ->asArray()
+                ->all();
+        } elseif ($id > 0) {
+            $out['results'] = [
+                'id' => $id,
+                'text' => Categorias::findOne($id)->categoria,
+            ];
+        }
+        return $out;
     }
 
     /**
@@ -146,7 +164,7 @@ class NoticiasController extends Controller
     private function listaCategorias()
     {
         return Categorias::find()
-            ->select('categoria')
+            ->select('categoria, id')
             ->indexBy('id')
             ->column();
     }
